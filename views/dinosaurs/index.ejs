@@ -1,4 +1,11 @@
 <a href="/dinosaurs/new">Create a new form</a>
+
+<form method="GET" action="/dinosaurs">
+    <label for="nameFilter">Filter by Name</label>
+    <input id="nameFilter" type="text" name="nameFilter">
+    <input type="submit">
+  </form>
+  
 <ul>
     <% myDinos.forEach(dino => { %>
         <li><%= dino.name %> is a <%=dino.type %></li>

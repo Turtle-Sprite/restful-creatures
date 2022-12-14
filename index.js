@@ -13,8 +13,14 @@ app.use(express.urlencoded({extended: false}))
 app.get("/dinosaurs", function(req, res){
     const dinosaurs = fs.readFileSync("./dinosaurs.json")
     //takes JSON language and translates it to data for humans
-    const dinoData = JSON.parse(dinosaurs)
-    console.log(dinoData)
+    let dinoData = JSON.parse(dinosaurs)
+    // console.log(dinoData)
+    const nameFilter = req.query.nameFilter
+    if(nameFilter) {
+        //for all items in the object, chekc it lowercase, against form values in index.ejs search input
+        //this filter needs exact values "littlefoot" vs "little foot" - one will return nothing because it is not an exact match to the items on the webpage. the only thing this does is eliminate capitilization errors
+        dinoData = dinoData.filter(dino => dino.name.toLowerCase() === nameFilter.toLowerCase())
+    }
     res.render('dinosaurs/index', {myDinos: dinoData})
 })
 
